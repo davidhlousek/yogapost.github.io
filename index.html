@@ -16,7 +16,7 @@
   --card:rgba(255,255,255,.92); --shadow:0 8px 30px rgba(0,0,0,.08);
   --border:#efefef; --radius:18px; --maxw:1100px;
   --t-sona:#F39C12; --t-sarka:#E74C3C; --t-monika:#8E44AD;
-  --t-misa:#27AE60; --t-martina:#2980B9; --t-petra:#D35400;
+  --t-misa:#E74C3C; --t-martina:#2980B9; --t-petra:#D35400;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.6}
@@ -138,7 +138,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       </div>
     </div>
   </header>
-s  
+ 
 
 <section class="hero">
   <div class="hero-img" id="heroImg" role="img" aria-label="Iyengar jóga — Holky z Poštovské"></div>
@@ -160,7 +160,6 @@ s
     <span class="i" style="background:var(--t-sona)" data-teacher="Soňa">Soňa</span>
     <span class="i" style="background:var(--t-sarka)" data-teacher="Šárka">Šárka</span>
     <span class="i" style="background:var(--t-monika)" data-teacher="Monika">Monika</span>
-    <span class="i" style="background:var(--t-misa)" data-teacher="Míša">Míša</span>
     <span class="i" style="background:var(--t-martina)" data-teacher="Martina">Martina</span>
     <span class="i" style="background:var(--t-petra)" data-teacher="Petra">Petra</span>
   </div>
@@ -179,7 +178,7 @@ s
           <div class="slot t-monika" data-location="YOGA i-D" data-teacher="Monika" data-time="7:15–8:45"><span class="t">7:15–8:45</span> Iyengar jóga — Monika</div>
           <div class="slot t-sona" data-location="YOGA i-D" data-teacher="Soňa" data-time="9:30–10:30"><span class="t">9:30–10:30</span> Jóga a mobilita 55+ — Soňa</div>
           <div class="slot t-sona" data-location="YOGA i-D" data-teacher="Soňa" data-time="11:00–12:00"><span class="t">11:00–12:00</span> Jóga v polední pauze — Soňa</div>
-          <div class="slot t-misa" data-location="YOGA i-D" data-teacher="Míša" data-time="15:30–17:00"><span class="t">15:30–17:00</span> Iyengar jóga — Míša</div>
+          <div class="slot t-misa" data-location="YOGA i-D" data-teacher="Šárka" data-time="15:30–17:00"><span class="t">15:30–17:00</span> Iyengar jóga — Šárka</div>
           <div class="slot t-sona" data-location="YOGA i-D" data-teacher="Soňa" data-time="17:15–18:45"><span class="t">17:15–18:45</span> Jóga — Soňa</div>
           <div class="slot t-sona" data-location="YOGA i-D" data-teacher="Soňa" data-time="19:00–20:30"><span class="t">19:00–20:30</span> YOGA in English — Soňa</div>
         </div>
@@ -201,7 +200,6 @@ s
           <div class="slot t-martina" data-location="YOGA i-D" data-teacher="Martina" data-time="8:45–9:45"><span class="t">8:45–9:45</span> Jóga při zdr. problémech — Martina</div>
           <div class="slot t-sarka" data-location="YOGA i-D" data-teacher="Šárka" data-time="11:00–12:00"><span class="t">11:00–12:00</span> Jóga v polední pauze — Šárka</div>
           <div class="slot t-martina" data-location="YOGA i-D" data-teacher="Martina" data-time="12:30–14:00"><span class="t">12:30–14:00</span> Iyengar jóga — Martina</div>
-          <div class="slot t-misa" data-location="YOGA i-D" data-teacher="Míša" data-time="17:15–18:45"><span class="t">17:15–18:45</span> Iyengar jóga — Míša</div>
         </div>
       </div>
       <div class="day"><strong>Pátek</strong>
@@ -371,7 +369,7 @@ s
         <div><label for="teacher">Lektor *</label>
           <select id="teacher" name="teacher" required>
             <option>Soňa</option><option>Šárka</option><option>Monika</option>
-            <option>Míša</option><option>Martina</option><option>Petra</option>
+          </option><option>Martina</option><option>Petra</option>
           </select>
         </div>
         <div><label for="location">Místo *</label>
@@ -500,7 +498,7 @@ s
   const honeypot = document.getElementById("honeypot");
   const sentAt = document.getElementById("sentAt");
   const iframe = document.getElementById("hidden_iframe");
-  const GAS_ENDPOINT = "PASTE_TVOJE_EXEC_URL_SEM"; // vlož svou Web App URL končící /exec
+  const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyyl1nsfja7PR1L1dV9Yj1RP3omlDiVn3pb2okZM4GFygs-RPNnTXQxfFZhNh6oZIH_EA/exec"; // vlož svou Web App URL končící /exec
 
   let submitting=false;
   form.addEventListener("submit",(e)=>{
