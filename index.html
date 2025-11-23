@@ -19,7 +19,13 @@
   --t-misa:#E74C3C; --t-martina:#2980B9; --t-petra:#D35400;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.6}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Helvetica Neue",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+  line-height:1.6;
+}
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--maxw);margin:0 auto;padding:24px}
 
@@ -30,8 +36,16 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
 
 /* hero */
 .hero{border-bottom:1px solid var(--border)}
-.hero-img{width:100%;aspect-ratio:16/7;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.88) 70%);background-position:center;background-size:cover}
-.hero-inner{padding:20px 24px 28px}
+.hero-img{
+  width:100%;
+  height:40vh;
+  max-height:320px;
+  min-height:180px;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.88) 70%);
+  background-position: center 15%; /* TADY – posun dolů */
+  background-size:cover;
+}
+.hero-inner{padding:16px 24px 20px}
 .hero p{margin:0 0 16px;color:var(--muted)}
 .btn{border:1px solid var(--accent-2);background:var(--accent);color:#111;border-radius:999px;padding:12px 18px;cursor:pointer}
 .btn.secondary{background:#fff;border-color:var(--border)}
@@ -97,7 +111,7 @@ h2{margin:12px 0}
 .modal.open{opacity:1;transform:none}
 .modal .head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding:16px 22px}
 .modal-body{padding:18px 22px}
-label{display:block;margin:10px 0 6px;font-weight:600}
+label{display:block;margin:10px 0 6px;font-weight:500}
 input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;border-radius:12px;background:#fff}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
@@ -138,14 +152,15 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       </div>
     </div>
   </header>
- 
 
 <section class="hero">
   <div class="hero-img" id="heroImg" role="img" aria-label="Iyengar jóga — Holky z Poštovské"></div>
   <div class="container hero-inner">
     <p id="lead">Baví nás jóga — Iyengar jóga v Brně a ve Šlapanicích. Najdi si lekci, která ti sedne a pojď si zacvičit.</p>
     <div class="cta">
-      <button class="btn" id="openForm">Přihlásit se</button>
+      <button class="btn" id="openForm" style="padding:12px 18px; display:inline-block;">
+        Přihlásit se
+      </button>
       <a class="btn secondary" href="#schedule">Rozvrh a místa</a>
       <a class="btn secondary" href="#pricing">Ceník</a>
     </div>
@@ -242,7 +257,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
 <section class="container split">
   <div class="card">
     <h2>IYENGAR JÓGA</h2>
-    <p>Iyengar jóga se zaměřuje na precizní nastavení pozic (ásan), jejich logické řazení a správné načasování. Pomáhá vyvážit tělo i mysl, posílit, zpružnit a zklidnit. Při praxi Iyengar jógy se využívají různé pomůcky, které mohou praxi usnadnit, tak aby její benefit mohl využít každý. Pro pokročilé studenty umožňují prohloubení vlastní praxe.</p>
+    <p>Iyengar jóga se zaměřuje na precizní nastavení pozic (ásan), jejich logické řazení a správné načasování. Pomáhá vyvážit tělo i mysl, posílit, zpružnit a zklidnit.</p>
   </div>
   <div class="card">
     <h2>Kontakt</h2>
@@ -254,6 +269,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   </div>
 </section>
 
+<!-- CENÍK -->
 <section class="container" id="pricing">
   <h2>Ceník</h2>
 
@@ -268,8 +284,8 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     <tbody>
       <tr>
         <td style="padding:6px 0;"><strong>Poštovská</strong></td>
-        <td style="text-align:right; padding:6px 0;">270 Kč</td>
-        <td style="text-align:right; padding:6px 0;">350 Kč</td>
+        <td style="text-align:right; padding:6px 0;">240 Kč</td>
+        <td style="text-align:right; padding:6px 0;">320 Kč</td>
       </tr>
       <tr>
         <td style="padding:6px 0;"><strong>Yogena</strong></td>
@@ -290,7 +306,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     pro vybranou kombinaci místa a času. 
   </p>
 </section>
-  
+
 <!-- MÍSTA (s fotkami) -->
 <section class="container">
   <h2>Kde cvičíme</h2>
@@ -308,7 +324,6 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     <div class="card place" id="pSlap" data-img>
       <h3>💛 Šlapanice, MŠ Zahrádka, Havlíčkova 1444/8</h3>
       <p>Brankou do areálu školky, prvním schodištěm až nahoru.</p>
-      <!-- pokud máš vlastní fotku Šlapanic, nahraď soubor níže -->
       <img class="thumb" src="Sarka%20Yoga%202025%20foto/budova_hlavni.jpg" alt="Šlapanice – tělocvična">
     </div>
   </div>
@@ -326,7 +341,6 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     </div>
   </div>
 </section>
-
 
 <!-- BLOG z Are.na -->
 <section class="container" id="blog">
@@ -361,27 +375,45 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       <input type="text" name="website" id="honeypot" style="display:none" tabindex="-1" autocomplete="off">
 
       <div class="row">
-        <div><label for="name">Jméno a příjmení *</label><input id="name" name="name" required placeholder="Tvoje jméno"></div>
-        <div><label for="email">E-mail *</label><input id="email" type="email" name="email" required placeholder="tvuj@email.cz"></div>
+        <div>
+          <label for="name">Jméno a příjmení *</label>
+          <input id="name" name="name" required placeholder="Tvoje jméno">
+        </div>
+        <div>
+          <label for="email">E-mail *</label>
+          <input id="email" type="email" name="email" required placeholder="tvuj@email.cz">
+        </div>
       </div>
 
       <div class="row">
-        <div><label for="teacher">Lektor *</label>
+        <div>
+          <label for="teacher">Lektor *</label>
           <select id="teacher" name="teacher" required>
-            <option>Soňa</option><option>Šárka</option><option>Monika</option>
-          </option><option>Martina</option><option>Petra</option>
+            <option>Soňa</option>
+            <option>Šárka</option>
+            <option>Monika</option>
+            <option>Míša</option>
+            <option>Martina</option>
+            <option>Petra</option>
           </select>
         </div>
-        <div><label for="location">Místo *</label>
+        <div>
+          <label for="location">Místo *</label>
           <select id="location" name="location" required>
-            <option>YOGA i-D</option><option>Yogena</option><option>Šlapanice</option>
+            <option>YOGA i-D</option>
+            <option>Yogena</option>
+            <option>Šlapanice</option>
           </select>
         </div>
       </div>
 
       <div class="row">
-        <div><label for="lesson">Konkrétní hodina *</label><select id="lesson" name="lesson" required></select></div>
-        <div><label for="product">Typ vstupu *</label>
+        <div>
+          <label for="lesson">Konkrétní hodina *</label>
+          <select id="lesson" name="lesson" required></select>
+        </div>
+        <div>
+          <label for="product">Typ vstupu *</label>
           <select id="product" name="product" required>
             <option>Jednorázový vstup</option>
             <option>Pernamentka 5 vstupů</option>
@@ -394,7 +426,15 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       <label for="note">Poznámka</label>
       <textarea id="note" name="note" rows="3" placeholder="Zpráva pro lektora…"></textarea>
 
-      <label><input type="checkbox" name="gdpr" required> Souhlasím se zpracováním údajů pro účely registrace (max. 3 měsíce).</label>
+      <label>
+        <input type="checkbox" name="gdpr" required>
+        Souhlasím se zpracováním údajů pro účely registrace (max. 3 měsíce).
+      </label>
+
+      <label>
+        <input type="checkbox" name="newsletter">
+        Chci, aby mi mohly chodit e-mailem novinky a informace o kurzech jógy.
+      </label>
 
       <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
         <button class="btn" type="submit" id="submitBtn">Odeslat přihlášku</button>
@@ -429,7 +469,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
   document.getElementById("year").textContent=new Date().getFullYear();
 
-  /* HERO IMG – přepnuto na uTina_small_ANT_0731_ANT_0727 copy.jpg */
+  /* HERO IMG */
   const hero=$("#heroImg");
   (function setHero(){
     const folder="Sarka Yoga 2025 foto";
@@ -499,7 +539,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   const honeypot = document.getElementById("honeypot");
   const sentAt = document.getElementById("sentAt");
   const iframe = document.getElementById("hidden_iframe");
-  const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyyl1nsfja7PR1L1dV9Yj1RP3omlDiVn3pb2okZM4GFygs-RPNnTXQxfFZhNh6oZIH_EA/exec"; // vlož svou Web App URL končící /exec
+  const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyyl1nsfja7PR1L1dV9Yj1RP3omlDiVn3pb2okZM4GFygs-RPNnTXQxfFZhNh6oZIH_EA/exec";
 
   let submitting=false;
   form.addEventListener("submit",(e)=>{
@@ -509,7 +549,12 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     sentAt.value = new Date().toISOString();
     formMsg.textContent = "Odesílám…";
     form.action = GAS_ENDPOINT; form.method = "POST"; form.target = "hidden_iframe";
-    const onLoad = () => { formMsg.textContent = "Díky! Počítáme s tebou 🙌"; form.reset(); submitting=false; iframe.removeEventListener("load", onLoad); };
+    const onLoad = () => {
+      formMsg.textContent = "Díky! Počítáme s tebou 🙌";
+      form.reset();
+      submitting=false;
+      iframe.removeEventListener("load", onLoad);
+    };
     iframe.addEventListener("load", onLoad, { once:true });
     form.submit();
   });
@@ -525,7 +570,6 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   const group=L.featureGroup(places.map(p=>L.marker(p.coords).bindPopup(p.name).addTo(map)));
   map.fitBounds(group.getBounds().pad(0.2));
 
-
   /* --- Galerie --- */
   function renderGallery(){
     const gallery = document.getElementById("gallery");
@@ -537,7 +581,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       "Postovska_IMG_6535.jpg","Postovska_IMG_6546.jpg","Postovska_IMG_6550.jpg",
       "Postovska_IMG_6555.jpg","Postovska_IMG_6559.jpg","Postovska_IMG_6567.jpg",
       "Postovska_IMG_6574.jpg","Postovska_IMG_6576.jpg","Postovska_IMG_6577.jpg",
-      "Postovska_IMG_6596.jpg","Postovska_IMG_6608.jpg","Petra2.jpeg","Petra1.jpeg",
+      "Postovska_IMG_6596.jpg","Postovska_IMG_6608.jpg",
       "UTina_ANT_0628 copy.jpg","UTina_ANT_0666 copy.jpg","UTina_ANT_0688 copy.jpg","UTina_ANT_0712 copy.jpg",
       "yoga_id.JPG","yogena.JPG"
     ];
@@ -549,7 +593,15 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       const src=`${encodeURI(folder)}/${encodeURIComponent(name)}`;
       img.loading="lazy"; img.decoding="async"; img.alt=name.replace(/ copy/i,"");
       img.onload=()=>{ if(img.naturalWidth&&img.naturalHeight){ ph.style.aspectRatio=`${img.naturalWidth} / ${img.naturalHeight}`; } ph.classList.add("loaded"); };
-      img.onerror=()=>{ const alt=`${encodeURI(folder)}/${encodeURIComponent(name.replace(" copy",""))}`; if(img.src!==alt){ img.onerror=()=>{ fig.remove(); }; img.src=alt; } else { fig.remove(); } };
+      img.onerror=()=>{
+        const alt=`${encodeURI(folder)}/${encodeURIComponent(name.replace(" copy",""))}`;
+        if(img.src!==alt){
+          img.onerror=()=>{ fig.remove(); };
+          img.src=alt;
+        } else {
+          fig.remove();
+        }
+      };
       img.addEventListener("click",()=>openLightboxImage(img.src));
       img.src=src; ph.appendChild(img); fig.appendChild(ph); gallery.appendChild(fig);
     });
@@ -557,8 +609,18 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
 
   /* LIGHTBOX – sdílený pro galerii (img) i blog (panel) */
   const lb=$("#lightbox"), lbImg=$("#lbImg"), lbPanel=$("#lbPanel"), lbClose=$("#lbClose");
-  function openLightboxImage(src){ lbPanel.hidden=true; lbImg.src=src; lbImg.style.display="block"; lb.classList.add("open"); }
-  function openLightboxHTML(html){ lbImg.style.display="none"; lbPanel.hidden=false; lbPanel.innerHTML=html; lb.classList.add("open"); }
+  function openLightboxImage(src){
+    lbPanel.hidden=true;
+    lbImg.src=src;
+    lbImg.style.display="block";
+    lb.classList.add("open");
+  }
+  function openLightboxHTML(html){
+    lbImg.style.display="none";
+    lbPanel.hidden=false;
+    lbPanel.innerHTML=html;
+    lb.classList.add("open");
+  }
   lbClose.addEventListener("click",()=>lb.classList.remove("open"));
   lb.addEventListener("click",e=>{ if(e.target===lb) lb.classList.remove("open"); });
 
@@ -567,12 +629,18 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   /* Cookies */
   const ck=$("#cookies");
   if(!localStorage.getItem("cookiesConsent")) ck.style.display="block";
-  $("#cookiesOk").addEventListener("click",()=>{ localStorage.setItem("cookiesConsent","ok"); ck.style.display="none"; });
-  $("#cookiesDecline").addEventListener("click",()=>{ localStorage.setItem("cookiesConsent","no"); ck.style.display="none"; });
+  $("#cookiesOk").addEventListener("click",()=>{
+    localStorage.setItem("cookiesConsent","ok");
+    ck.style.display="none";
+  });
+  $("#cookiesDecline").addEventListener("click",()=>{
+    localStorage.setItem("cookiesConsent","no");
+    ck.style.display="none";
+  });
 
   /* ============ BLOG: Are.na integrace ============ */
-  const ARENA_CHANNEL_SLUG = "iyengar-yoga"; // <- doplň svůj channel slug
-  const ARENA_TOKEN = "VWjFjpAjm_CwlcjamT61UJHK04B-_EKyECPKcD3v0Ns"; // <- volitelné (pro veřejný kanál nech prázdné; pro privátní vlož PAT)
+  const ARENA_CHANNEL_SLUG = "iyengar-yoga";
+  const ARENA_TOKEN = "VWjFjpAjm_CwlcjamT61UJHK04B-_EKyECPKcD3v0Ns";
 
   async function fetchArenaPage(page=1, per=40){
     const url = `https://api.are.na/v2/channels/${encodeURIComponent(ARENA_CHANNEL_SLUG)}?page=${page}&per=${per}`;
@@ -591,7 +659,9 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   function blockDate(b){
     return new Date(b.published_at || b.connected_at || b.updated_at || b.created_at || Date.now());
   }
-  function escapeHTML(s){ return s.replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c])); }
+  function escapeHTML(s){
+    return s.replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+  }
 
   function blockExcerpt(b){
     if(b.class==="Text" && b.content_html){
@@ -606,11 +676,13 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   function renderBlog(blocks){
     const grid=$("#blogGrid"); grid.innerHTML="";
     blocks
-      .sort((a,b)=> blockDate(b)-blockDate(a)) // nejnovější první
+      .sort((a,b)=> blockDate(b)-blockDate(a))
       .forEach(b=>{
         const card=document.createElement("article"); card.className="post";
         const imgSrc=blockCover(b);
-        if(imgSrc){ const img=new Image(); img.className="cover"; img.alt=b.title||"cover"; img.src=imgSrc; card.appendChild(img); }
+        if(imgSrc){
+          const img=new Image(); img.className="cover"; img.alt=b.title||"cover"; img.src=imgSrc; card.appendChild(img);
+        }
         const inner=document.createElement("div"); inner.className="inner";
         const d=blockDate(b); const dstr=d.toLocaleDateString("cs-CZ",{year:"numeric",month:"2-digit",day:"2-digit"});
         inner.innerHTML = `
@@ -646,10 +718,13 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   }
 
   (async function initBlog(){
-    if(!ARENA_CHANNEL_SLUG){ $("#blogMsg").textContent="(Doplň slug kanálu Are.na, aby se blog načetl.)"; return; }
+    if(!ARENA_CHANNEL_SLUG){
+      $("#blogMsg").textContent="(Doplň slug kanálu Are.na, aby se blog načetl.)";
+      return;
+    }
     try{
       $("#blogMsg").textContent="Načítám články…";
-      const data = await fetchArenaPage(1, 40); // stáhneme až 40 bloků najednou
+      const data = await fetchArenaPage(1, 40);
       renderBlog(data.contents||[]);
       $("#blogMsg").textContent = (data.contents && data.contents.length) ? "" : "Zatím tu nic není.";
     }catch(err){
