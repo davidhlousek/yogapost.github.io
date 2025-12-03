@@ -408,10 +408,12 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       </div>
 
       <div class="row">
-        <div>
-          <label for="lesson">Konkrétní hodina *</label>
-          <select id="lesson" name="lesson" required></select>
-        </div>
+    <div>
+  <label for="lesson">Konkrétní hodina *</label>
+  <select id="lesson" name="lesson" required></select>
+</div>
+
+<input type="hidden" name="weekday" id="weekday">
         <div>
           <label for="product">Typ vstupu *</label>
           <select id="product" name="product" required>
@@ -510,20 +512,38 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
 
   /* Rozvrh -> modál */
   const selTeacher=$("#teacher"), selLocation=$("#location"), selLesson=$("#lesson");
-  const locToId={ "YOGA i-D":"postovska", "Yogena":"yogena", "Šlapanice":"slapanice" };
-  function fillLessonOptions(){
-    const id=locToId[selLocation.value]; selLesson.innerHTML="";
-    const slots=$$("#"+id+" .slot");
-    slots.forEach(s=>{
-      if(selTeacher.value && s.dataset.teacher!==selTeacher.value) return;
-      const v=`${s.dataset.time} — ${s.dataset.teacher} @ ${selLocation.value}`;
-      const o=document.createElement("option"); o.value=v; o.textContent=v.replace(/ @ .+$/,"");
-      selLesson.appendChild(o);
-    });
-    if(!selLesson.options.length){
-      const o=document.createElement("option"); o.value=""; o.textContent="(Vyber jiného lektora/místo)"; selLesson.appendChild(o);
-    }
+const locToId={ "YOGA i-D":"postovska", "Yogena":"yogena", "Šlapanice":"slapanice" };
+
+function fillLessonOptions(){
+  const id = locToId[selLocation.value];
+  selLesson.innerHTML = "";
+  if(!id) return;
+
+  const slots = $$("#" + id + " .slot");
+  slots.forEach(s=>{
+    if(selTeacher.value && s.dataset.teacher!==selTeacher.value) return;
+
+    // 🔥 vytáhneme den týdne z .day > strong (Pondělí, Úterý,…)
+    const dayWrap = s.closest(".day");
+    const dayEl = dayWrap ? dayWrap.querySelector("strong") : null;
+    const weekday = dayEl ? dayEl.textContent.trim() : "";
+
+    // hodnota + text včetně dne
+    const v = `${weekday} ${s.dataset.time} — ${s.dataset.teacher} @ ${selLocation.value}`;
+    const o = document.createElement("option");
+    o.value = v;
+    o.textContent = v.replace(/ @ .+$/,""); // bez @ Místo
+    o.dataset.weekday = weekday;           // uložíme den do data atributu
+    selLesson.appendChild(o);
+  });
+
+  if(!selLesson.options.length){
+    const o=document.createElement("option");
+    o.value="";
+    o.textContent="(Vyber jiného lektora/místo)";
+    selLesson.appendChild(o);
   }
+}
   function setDropdowns(loc, teacher, time){
     if(loc) selLocation.value=loc; if(teacher) selTeacher.value=teacher;
     fillLessonOptions();
@@ -537,27 +557,29 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   const form = document.getElementById("signupForm");
   const formMsg = document.getElementById("formMsg");
   const honeypot = document.getElementById("honeypot");
+  const weekdayInput = document.getElementById("weekday");
   const sentAt = document.getElementById("sentAt");
   const iframe = document.getElementById("hidden_iframe");
   const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyyl1nsfja7PR1L1dV9Yj1RP3omlDiVn3pb2okZM4GFygs-RPNnTXQxfFZhNh6oZIH_EA/exec";
 
   let submitting=false;
   form.addEventListener("submit",(e)=>{
-    e.preventDefault();
-    if(honeypot.value || submitting) return;
-    submitting=true;
-    sentAt.value = new Date().toISOString();
-    formMsg.textContent = "Odesílám…";
-    form.action = GAS_ENDPOINT; form.method = "POST"; form.target = "hidden_iframe";
-    const onLoad = () => {
-      formMsg.textContent = "Díky! Počítáme s tebou 🙌";
-      form.reset();
-      submitting=false;
-      iframe.removeEventListener("load", onLoad);
-    };
+  e.preventDefault();
+  if(honeypot.value || submitting) return;
+
+  // 🔥 doplníme den týdne podle vybrané hodiny
+  if(selLesson.selectedOptions && selLesson.selectedOptions[0]){
+    weekdayInput.value = selLesson.selectedOptions[0].dataset.weekday || "";
+  } else {
+    weekdayInput.value = "";
+  }
+
+  submitting=true;
+    
     iframe.addEventListener("load", onLoad, { once:true });
     form.submit();
   });
+  
 
   /* Mapa */
   const map=L.map('map',{scrollWheelZoom:false}).setView([49.1953,16.6103],13);
