@@ -43,7 +43,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
   max-height:320px;
   min-height:180px;
   background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.88) 70%);
-  background-position:center 20%; /* posun dolů */
+  background-position:center 20%;
   background-size:cover;
 }
 .hero-inner{padding:16px 24px 20px}
@@ -138,6 +138,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
 .cookies .ghost{background:transparent;color:#fff}
 </style>
 </head>
+
 <body>
 <header>
   <div class="container nav">
@@ -156,15 +157,23 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
   <div class="hero-img" id="heroImg" role="img" aria-label="Iyengar jóga — Holky z Poštovské"></div>
   <div class="container hero-inner">
     <p id="lead">Baví nás jóga — Iyengar jóga v Brně a ve Šlapanicích. Najdi si lekci, která ti sedne a pojď si zacvičit.</p>
-    <div class="cta">
-      <button class="btn" id="openForm">
-        Přihlásit se
-      </button>
-      <a class="btn secondary" href="#schedule">Rozvrh a místa</a>
-      <a class="btn secondary" href="#pricing">Ceník</a>
-    </div>
-  </div>
-</section>
+    <<div class="cta">
+  <button class="btn" id="openForm">
+    Přihlásit se
+  </button>
+
+  <a class="btn secondary" href="#schedule">
+    Rozvrh a místa
+  </a>
+
+  <a class="btn secondary" href="#pricing">
+    Ceník
+  </a>
+
+  <a class="btn secondary" href="udalosti.html">
+    Události 🦴🩺
+  </a>
+</div>
 
 <!-- ROZVRH -->
 <section class="container" id="schedule">
@@ -176,7 +185,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     <span class="i" style="background:var(--t-monika)" data-teacher="Monika">Monika</span>
     <span class="i" style="background:var(--t-misa)"   data-teacher="Míša">Míša</span>
     <span class="i" style="background:var(--t-martina)"data-teacher="Martina">Martina</span>
-    <span class="i" style="background:var(--t-petra)" data-teacher="Petra">Petra</span>
+    <span class="i" style="background:var(--t-petra)"  data-teacher="Petra">Petra</span>
   </div>
 
   <div id="scheduleTabs">
@@ -306,8 +315,8 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
 
   <p style="margin-top:12px; max-width:600px">
     Platit můžete hotově, prostřednictvím QR kódu na místě, ve studiu na Poštovské lze platit kartou.
-    Zvýhodněné předplatné na 1 semestr nebo více vstupů rádi poskytneme. Napište nám, cenu upřesníme 
-    pro vybranou kombinaci místa a času. 
+    Zvýhodněné předplatné na 1 semestr nebo více vstupů rádi poskytneme. Napište nám, cenu upřesníme
+    pro vybranou kombinaci místa a času.
   </p>
 </section>
 
@@ -371,7 +380,6 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       <button class="btn secondary" id="closeForm" style="padding:6px 10px">Zavřít</button>
     </div>
 
-    <!-- skrytý iframe pro POST bez CORS -->
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
     <form id="signupForm" class="modal-body" action="#" target="hidden_iframe" method="POST">
@@ -538,17 +546,7 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     }, 160);
   }
 
-  $("#openForm").addEventListener("click", () => {
-    setDropdowns();
-    openModal();
-  });
-  $("#closeForm").addEventListener("click", closeModal);
-  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && modal.style.display === "flex") closeModal();
-  });
-
-  /* Rozvrh -> modál */
+  /* Rozvrh -> modál (FIX duplicity času/lektora = správný den) */
   const selTeacher   = $("#teacher");
   const selLocation  = $("#location");
   const selLesson    = $("#lesson");
@@ -573,12 +571,21 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
       const dayEl   = dayWrap ? dayWrap.querySelector("strong") : null;
       const weekday = dayEl ? dayEl.textContent.trim() : "";
 
-      const v = `${weekday} ${s.dataset.time} — ${s.dataset.teacher} @ ${selLocation.value}`;
+      // ✅ unikátní value (kvůli duplicitám)
+      const unique = `${weekday}||${s.dataset.time}||${s.dataset.teacher}||${selLocation.value}`;
 
       const o = document.createElement("option");
-      o.value = v;
-      o.textContent = `${s.dataset.time} — ${s.dataset.teacher}`;
-      o.dataset.weekday = weekday;
+      o.value = unique;
+
+      // ✅ lepší přehled: den + čas + lektor
+      o.textContent = `${weekday} ${s.dataset.time} — ${s.dataset.teacher}`;
+
+      // ✅ data pro přesné dohledání
+      o.dataset.weekday  = weekday;
+      o.dataset.time     = s.dataset.time;
+      o.dataset.teacher  = s.dataset.teacher;
+      o.dataset.location = selLocation.value;
+
       selLesson.appendChild(o);
     });
 
@@ -590,28 +597,57 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     }
   }
 
-  function setDropdowns(loc, teacher, time){
+  function setDropdowns(loc, teacher, time, weekday){
     if (loc)     selLocation.value = loc;
     if (teacher) selTeacher.value  = teacher;
+
     fillLessonOptions();
-    if (time) {
-      const target = `${time} — ${teacher}`;
-      [...selLesson.options].forEach(o => {
-        if (o.textContent === target) selLesson.value = o.value;
-      });
+
+    // ✅ vyber správnou option podle day+time+teacher+location
+    if (time && teacher && weekday){
+      const opt = [...selLesson.options].find(o =>
+        o.dataset.time === time &&
+        o.dataset.teacher === teacher &&
+        o.dataset.weekday === weekday &&
+        o.dataset.location === selLocation.value
+      );
+      if (opt) selLesson.value = opt.value;
     }
   }
 
   selLocation.addEventListener("change", fillLessonOptions);
   selTeacher.addEventListener("change", fillLessonOptions);
 
+  // klik na slot -> nastav přesný den + otevři
   $$(".slot").forEach(s => s.addEventListener("click", () => {
-    setDropdowns(s.dataset.location, s.dataset.teacher, s.dataset.time);
     const dayWrap = s.closest(".day");
     const dayEl   = dayWrap ? dayWrap.querySelector("strong") : null;
-    weekdayInput.value = dayEl ? dayEl.textContent.trim() : "";
+    const weekday = dayEl ? dayEl.textContent.trim() : "";
+
+    setDropdowns(s.dataset.location, s.dataset.teacher, s.dataset.time, weekday);
+    weekdayInput.value = weekday;
+
     openModal();
   }));
+
+  // ruční změna výběru v selectu -> aktualizuj hidden weekday
+  selLesson.addEventListener("change", () => {
+    const o = selLesson.selectedOptions && selLesson.selectedOptions[0];
+    weekdayInput.value = (o && o.dataset.weekday) ? o.dataset.weekday : "";
+  });
+
+  // tlačítko "Přihlásit se" nahoře
+  $("#openForm").addEventListener("click", () => {
+    setDropdowns();       // jen naplní select podle defaultů
+    fillLessonOptions();  // jistota, aby byl select vždy naplněný
+    openModal();
+  });
+
+  $("#closeForm").addEventListener("click", closeModal);
+  modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && modal.style.display === "flex") closeModal();
+  });
 
   /* --- Odesílání přihlášky (GAS /exec přes skrytý iframe) --- */
   const form     = document.getElementById("signupForm");
@@ -627,10 +663,9 @@ input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e6e6e0;bord
     e.preventDefault();
     if (honeypot.value || submitting) return;
 
-    // pokud nebylo vybráno přes „slot“, doplníme weekday z vybrané option
-    if (selLesson.selectedOptions && selLesson.selectedOptions[0]) {
-      weekdayInput.value = selLesson.selectedOptions[0].dataset.weekday || "";
-    }
+    // ✅ weekday vždy ber z vybrané option (nejspolehlivější)
+    const o = selLesson.selectedOptions && selLesson.selectedOptions[0];
+    weekdayInput.value = (o && o.dataset.weekday) ? o.dataset.weekday : "";
 
     submitting = true;
     sentAt.value = new Date().toISOString();
